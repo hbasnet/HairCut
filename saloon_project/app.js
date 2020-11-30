@@ -13,10 +13,8 @@ InitiateMongoServer();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(express.static(path.join(__dirname, "/barber/build")));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
 // User Register Route
 app.post('/register', async (req, res) => {
@@ -125,6 +123,9 @@ app.post('/visited', auth, async (req, res) => {
 }
 )
 
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname,"barber/build/index.html"));
+})
 
 app.listen(port, () => {
   console.log(`Loyalty app listening at http://localhost:${port}`)
